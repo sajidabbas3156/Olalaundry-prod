@@ -48,7 +48,7 @@ module.exports = {
       user: 'deploy',
       host: 'your-server-ip',
       ref: 'origin/main',
-      repo: 'https://github.com/sajidabbas3156/Ola-laundry-master.git',
+      repo: 'https://github.com/sajidabbas3156/Olalaundry-prod.git',
       path: '/var/www/olalaundry',
       'post-deploy': 'npm ci --production && npm run build && pm2 reload ecosystem.config.js --env production',
       'pre-setup': 'sudo mkdir -p /var/www/olalaundry /var/log/olalaundry && sudo chown -R deploy:deploy /var/www/olalaundry /var/log/olalaundry'
