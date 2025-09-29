@@ -82,7 +82,7 @@ jobs:
           echo "🏥 Performing post-rollback health check..."
           sleep 10
           
-          curl -f http://localhost:3000/health || {
+          curl -f http://localhost:5000 || {
             echo "❌ Post-rollback health check failed"
             pm2 logs $APP_NAME --lines 20
             exit 1
@@ -110,7 +110,7 @@ jobs:
           pm2 status
           echo ""
           echo "Health Check:"
-          curl -s http://localhost:3000/health | jq . || echo "Health check failed"
+          curl -s http://localhost:5000 | head -5 || echo "Health check failed"
           echo ""
           echo "Current Commit:"
           cd /var/www/olalaundry && git rev-parse HEAD

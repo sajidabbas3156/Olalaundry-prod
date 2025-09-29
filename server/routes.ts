@@ -30,7 +30,11 @@ import aiOperationsRouter from "./routes/ai-operations";
 import productionConfigRouter from "./routes/production-config";
 import laundryFinancialAIRouter from "./routes/laundry-financial-ai";
 
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required for security');
+}
 
 // Middleware for authentication
 const authenticateToken = async (req: any, res: any, next: any) => {
@@ -41,16 +45,23 @@ const authenticateToken = async (req: any, res: any, next: any) => {
     return res.status(401).json({ message: "Access token required" });
   }
 
-  // Demo token for development
+  // Demo token for development only - NEVER allow in production
   if (token === 'demo-token-123') {
-    req.user = {
-      id: 1,
-      email: 'admin@laundrypro.bh',
-      firstName: 'Admin',
-      lastName: 'User',
-      role: 'org_owner'
-    };
-    return next();
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('⚠️  Using demo token for authentication - development mode only');
+      req.user = {
+        id: 1,
+        email: 'admin@laundrypro.bh',
+        firstName: 'Admin',
+        lastName: 'User',
+        role: 'org_owner'
+      };
+      return next();
+    } else {
+      // Log security attempt in production
+      console.error('🚨 SECURITY ALERT: Attempt to use demo token in production mode blocked');
+      return res.status(401).json({ message: "Invalid token" });
+    }
   }
 
   try {

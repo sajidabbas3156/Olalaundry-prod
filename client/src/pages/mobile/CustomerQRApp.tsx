@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { laundryItems, laundryServices, finishingOptions } from "@/lib/laundryItems";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "wouter";
 import {
   CalendarIcon,
   QrCode,
@@ -21,7 +22,9 @@ import {
   CreditCard,
   Tag,
   ChevronRight,
-  Check
+  Check,
+  ArrowLeft,
+  Home
 } from "lucide-react";
 
 interface OrderItem {
@@ -122,18 +125,37 @@ export default function CustomerQRApp() {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-md mx-auto">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <QrCode className="h-6 w-6 text-primary-foreground" />
+    <div className="min-h-screen bg-background">
+      {/* Navigation Header */}
+      <header className="bg-card border-b border-border px-4 py-3 sticky top-0 z-10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <Link to="/">
+              <Button variant="ghost" size="sm">
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                <Home className="h-4 w-4" />
+              </Button>
+            </Link>
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+              <QrCode className="h-5 w-5 text-primary-foreground" />
             </div>
-            <h1 className="text-2xl font-bold">OLA Quick Order</h1>
+            <span className="font-semibold text-foreground">QR Quick Order</span>
           </div>
-          <p className="text-muted-foreground">Fast & easy laundry service booking</p>
         </div>
+      </header>
+
+      <div className="p-4">
+        <div className="max-w-md mx-auto">
+          {/* Header */}
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                <QrCode className="h-6 w-6 text-primary-foreground" />
+              </div>
+              <h1 className="text-2xl font-bold">OLA Quick Order</h1>
+            </div>
+            <p className="text-muted-foreground">Fast & easy laundry service booking</p>
+          </div>
 
         {/* Progress Steps */}
         <div className="flex justify-between mb-8">
@@ -608,6 +630,7 @@ export default function CustomerQRApp() {
             </>
           )}
         </Card>
+        </div>
       </div>
     </div>
   );

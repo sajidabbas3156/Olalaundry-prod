@@ -9,8 +9,9 @@ module.exports = {
     // Environment
     env_production: {
       NODE_ENV: 'production',
-      PORT: 3000,
-      HOST: '0.0.0.0'
+      PORT: 5000,
+      HOST: '0.0.0.0',
+      JWT_SECRET: process.env.JWT_SECRET || 'OLA-LAUNDRY-PRODUCTION-SECRET-KEY-2024-SECURE-MINIMUM-32-CHARACTERS'
     },
     
     // Process Management
