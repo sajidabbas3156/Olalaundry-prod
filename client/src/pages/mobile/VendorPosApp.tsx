@@ -12,6 +12,7 @@ import { useCustomer } from "@/contexts/CustomerContext";
 import { laundryItems, laundryServices, finishingOptions, deliveryOptions } from "@/lib/laundryItems";
 import AddCustomerDialog from "@/components/pos/AddCustomerDialog";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "wouter";
 import {
   CreditCard,
   ShoppingCart,
@@ -24,7 +25,9 @@ import {
   Clock,
   DollarSign,
   UserPlus,
-  Edit
+  Edit,
+  ArrowLeft,
+  Home
 } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import { LaundrySpinner } from "@/components/ui/laundry-spinner";
@@ -137,6 +140,12 @@ export default function VendorPosApp() {
       <header className="bg-card border-b border-border px-4 py-3 sticky top-0 z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
+            <Link to="/">
+              <Button variant="ghost" size="sm">
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                <Home className="h-4 w-4" />
+              </Button>
+            </Link>
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
               <CreditCard className="h-4 w-4 text-primary-foreground" />
             </div>

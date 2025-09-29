@@ -11,6 +11,7 @@ import { DriversProvider } from "@/contexts/DriversContext";
 
 // Public Pages
 import LandingPage from "@/pages/public/LandingPage";
+import LoginPage from "@/pages/auth/LoginPage";
 
 // Tenant Pages (Web Admin Panel)  
 import Dashboard from "@/pages/tenant/Dashboard";
@@ -72,6 +73,7 @@ function App() {
                         <Switch>
                           {/* Public Routes */}
                           <Route path="/" component={LandingPage} />
+                          <Route path="/login" component={LoginPage} />
                           
                           {/* Mobile Applications */}
                           <Route path="/customer-app" component={CustomerApp} />

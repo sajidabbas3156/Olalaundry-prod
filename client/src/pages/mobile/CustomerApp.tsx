@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useData } from "@/contexts/DataContext";
 import { useCustomer } from "@/contexts/CustomerContext";
+import { Link } from "wouter";
 import {
   Store,
   Package,
@@ -14,7 +15,9 @@ import {
   Phone,
   MapPin,
   Clock,
-  Star
+  Star,
+  ArrowLeft,
+  Home
 } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import { LaundrySpinner } from "@/components/ui/laundry-spinner";
@@ -45,10 +48,16 @@ export default function CustomerApp() {
       <header className="bg-card border-b border-border px-4 py-3 sticky top-0 z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
+            <Link to="/">
+              <Button variant="ghost" size="sm">
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                <Home className="h-4 w-4" />
+              </Button>
+            </Link>
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">OLA</span>
             </div>
-            <span className="font-semibold text-foreground">Laundry Master</span>
+            <span className="font-semibold text-foreground">Customer App</span>
           </div>
           <div className="flex items-center space-x-2">
             <PWAInstallButton variant="button" size="sm" />

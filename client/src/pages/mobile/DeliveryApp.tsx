@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { useDrivers } from "@/contexts/DriversContext";
 import { useData } from "@/contexts/DataContext";
+import { Link } from "wouter";
 import {
   MapPin,
   Navigation,
@@ -17,7 +18,9 @@ import {
   CheckCircle,
   Battery,
   Signal,
-  Zap
+  Zap,
+  ArrowLeft,
+  Home
 } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import { LaundrySpinner } from "@/components/ui/laundry-spinner";
@@ -74,6 +77,12 @@ export default function DeliveryApp() {
       <header className="bg-card border-b border-border px-4 py-3 sticky top-0 z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
+            <Link to="/">
+              <Button variant="ghost" size="sm">
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                <Home className="h-4 w-4" />
+              </Button>
+            </Link>
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
               <Truck className="h-4 w-4 text-primary-foreground" />
             </div>
