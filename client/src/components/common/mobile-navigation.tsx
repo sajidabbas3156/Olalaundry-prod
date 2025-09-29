@@ -40,7 +40,7 @@ const navigationItems: NavigationItem[] = [
     name: "Admin Panel",
     href: "/admin",
     icon: Monitor,
-    allowedRoles: [USER_ROLES.SUPER_ADMIN, USER_ROLES.ORG_OWNER, USER_ROLES.BRANCH_MANAGER, USER_ROLES.INVENTORY_MANAGER],
+    allowedRoles: [USER_ROLES.SUPERADMIN, USER_ROLES.ORG_OWNER, USER_ROLES.BRANCH_MANAGER, USER_ROLES.INVENTORY_MANAGER],
   },
   {
     name: "POS System",
@@ -87,7 +87,7 @@ const navigationItems: NavigationItem[] = [
     name: "Analytics",
     href: "/analytics",
     icon: TrendingUp,
-    allowedRoles: [USER_ROLES.BRANCH_MANAGER, USER_ROLES.ORG_OWNER, USER_ROLES.SUPER_ADMIN],
+    allowedRoles: [USER_ROLES.BRANCH_MANAGER, USER_ROLES.ORG_OWNER, USER_ROLES.SUPERADMIN],
   },
   {
     name: "Notifications",
@@ -107,7 +107,7 @@ export function MobileNavigation() {
 
   const getRoleColor = (userRole: string) => {
     switch (userRole) {
-      case USER_ROLES.SUPER_ADMIN: return "bg-red-500";
+      case USER_ROLES.SUPERADMIN: return "bg-red-500";
       case USER_ROLES.ORG_OWNER: return "bg-purple-500";
       case USER_ROLES.BRANCH_MANAGER: return "bg-blue-500";
       case USER_ROLES.INVENTORY_MANAGER: return "bg-green-500";

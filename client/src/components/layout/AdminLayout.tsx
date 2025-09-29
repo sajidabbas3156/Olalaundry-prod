@@ -14,7 +14,7 @@ export default function AdminLayout() {
     );
   }
 
-  if (!user || user.role !== 'admin') {
+  if (!user || user.role !== 'superadmin') {
     return <div>Access denied</div>;
   }
 

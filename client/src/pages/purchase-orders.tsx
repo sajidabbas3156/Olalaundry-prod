@@ -119,8 +119,8 @@ export default function PurchaseOrders() {
   const onSubmit = (data: PurchaseOrderFormData) => {
     const submitData = {
       ...data,
-      supplierId: data.supplierId ? parseInt(data.supplierId) : undefined,
-      expectedDelivery: data.expectedDelivery ? new Date(data.expectedDelivery).toISOString() : undefined,
+      supplierId: data.supplierId ? Number(data.supplierId) : undefined,
+      expectedDelivery: data.expectedDelivery || undefined,
     };
 
     if (editingOrder) {

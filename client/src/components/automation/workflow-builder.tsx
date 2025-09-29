@@ -60,7 +60,7 @@ export function WorkflowBuilder() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const { data: workflows = [], isLoading } = useQuery({
+  const { data: workflows = [], isLoading } = useQuery<Workflow[]>({
     queryKey: ["/api/workflows"],
   });
 
@@ -274,7 +274,7 @@ export function WorkflowBuilder() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
-              {workflows.filter((w: Workflow) => w.isActive).length}
+              {workflows.filter((w) => w.isActive).length}
             </div>
           </CardContent>
         </Card>
@@ -302,7 +302,7 @@ export function WorkflowBuilder() {
             </CardContent>
           </Card>
         ) : (
-          workflows.map((workflow: Workflow) => (
+          workflows.map((workflow) => (
             <Card key={workflow.id}>
               <CardHeader>
                 <div className="flex items-center justify-between">
