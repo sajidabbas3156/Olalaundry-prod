@@ -49,12 +49,13 @@ export default function AIOperationsCenter() {
   // Financial forecasting mutation
   const forecastMutation = useMutation({
     mutationFn: async (params: any) => {
-      return apiRequest('POST', '/api/ai/financial-forecast', params);
+      const response = await apiRequest('POST', '/api/ai/financial-forecast', params);
+      return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast({
         title: "AI Forecast Generated",
-        description: `Financial forecast completed with ${(data.forecast.confidence_score * 100).toFixed(1)}% confidence`,
+        description: `Financial forecast completed with ${(data.forecast?.confidence_score * 100 || 0).toFixed(1)}% confidence`,
       });
     },
   });
@@ -62,7 +63,8 @@ export default function AIOperationsCenter() {
   // Optimization mutation
   const optimizeMutation = useMutation({
     mutationFn: async (params: any) => {
-      return apiRequest('POST', '/api/ai/optimize-operations', params);
+      const response = await apiRequest('POST', '/api/ai/optimize-operations', params);
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -75,7 +77,8 @@ export default function AIOperationsCenter() {
   // AI Marketing Targets mutation
   const targetsMutation = useMutation({
     mutationFn: async (params: any) => {
-      return apiRequest('POST', '/api/ai/marketing-targets', params);
+      const response = await apiRequest('POST', '/api/ai/marketing-targets', params);
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -88,7 +91,8 @@ export default function AIOperationsCenter() {
   // AI Branding Automation mutation
   const brandingMutation = useMutation({
     mutationFn: async (params: any) => {
-      return apiRequest('POST', '/api/ai/branding-automation', params);
+      const response = await apiRequest('POST', '/api/ai/branding-automation', params);
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -361,7 +365,7 @@ export default function AIOperationsCenter() {
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-2xl font-bold text-green-600">
-                        ${forecastMutation.data.forecast.predicted_revenue?.toLocaleString()}
+                        ${forecastMutation.data?.forecast?.predicted_revenue?.toLocaleString() || '0'}
                       </div>
                       <p className="text-sm text-gray-600">Predicted Revenue</p>
                     </CardContent>
@@ -369,7 +373,7 @@ export default function AIOperationsCenter() {
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-2xl font-bold text-red-600">
-                        ${forecastMutation.data.forecast.predicted_expenses?.toLocaleString()}
+                        ${forecastMutation.data?.forecast?.predicted_expenses?.toLocaleString() || '0'}
                       </div>
                       <p className="text-sm text-gray-600">Predicted Expenses</p>
                     </CardContent>
@@ -377,7 +381,7 @@ export default function AIOperationsCenter() {
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-2xl font-bold text-blue-600">
-                        {(forecastMutation.data.forecast.profit_margins * 100).toFixed(1)}%
+                        {((forecastMutation.data?.forecast?.profit_margins || 0) * 100).toFixed(1)}%
                       </div>
                       <p className="text-sm text-gray-600">Profit Margin</p>
                     </CardContent>
@@ -385,7 +389,7 @@ export default function AIOperationsCenter() {
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-2xl font-bold text-purple-600">
-                        {(forecastMutation.data.forecast.confidence_score * 100).toFixed(1)}%
+                        {((forecastMutation.data?.forecast?.confidence_score || 0) * 100).toFixed(1)}%
                       </div>
                       <p className="text-sm text-gray-600">Confidence Score</p>
                     </CardContent>

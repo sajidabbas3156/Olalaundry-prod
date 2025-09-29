@@ -10,6 +10,17 @@ export type UserRole =
   | 'delivery_agent'
   | 'customer';
 
+export const USER_ROLES = {
+  SUPERADMIN: 'superadmin' as const,
+  ORG_OWNER: 'org_owner' as const,
+  BRANCH_MANAGER: 'branch_manager' as const,
+  INVENTORY_MANAGER: 'inventory_manager' as const,
+  LAUNDRY_STAFF: 'laundry_staff' as const,
+  CASHIER: 'cashier' as const,
+  DELIVERY_AGENT: 'delivery_agent' as const,
+  CUSTOMER: 'customer' as const,
+};
+
 interface User {
   id: number;
   email: string;
@@ -24,6 +35,11 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isLoading: boolean;
+  role: UserRole | null;
+  displayName: string;
+  canAccessAdminDashboard: boolean;
+  canAccessPOS: boolean;
+  canAccessDelivery: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   hasRole: (roles: UserRole | UserRole[]) => boolean;
@@ -122,11 +138,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return userPermissions.includes('*') || userPermissions.includes(permission);
   };
 
+  const role = user?.role || null;
+  const displayName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email : '';
+  const canAccessAdminDashboard = hasRole(['superadmin', 'org_owner', 'branch_manager']);
+  const canAccessPOS = hasRole(['superadmin', 'org_owner', 'branch_manager', 'cashier']);
+  const canAccessDelivery = hasRole(['superadmin', 'org_owner', 'branch_manager', 'delivery_agent']);
+
   return (
     <AuthContext.Provider value={{ 
       user, 
       loading, 
-      isLoading: loading, 
+      isLoading: loading,
+      role,
+      displayName,
+      canAccessAdminDashboard,
+      canAccessPOS,
+      canAccessDelivery,
       login, 
       logout, 
       hasRole, 

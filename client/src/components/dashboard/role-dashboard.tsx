@@ -30,7 +30,7 @@ export function RoleDashboard() {
 
   const getRoleColor = (userRole: string) => {
     switch (userRole) {
-      case USER_ROLES.SUPER_ADMIN: return "bg-red-500";
+      case USER_ROLES.SUPERADMIN: return "bg-red-500";
       case USER_ROLES.ORG_OWNER: return "bg-purple-500";
       case USER_ROLES.BRANCH_MANAGER: return "bg-blue-500";
       case USER_ROLES.INVENTORY_MANAGER: return "bg-green-500";
@@ -90,7 +90,7 @@ export function RoleDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Admin Dashboard - For management roles */}
-          <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN, USER_ROLES.ORG_OWNER, USER_ROLES.BRANCH_MANAGER, USER_ROLES.INVENTORY_MANAGER]}>
+          <RoleGuard allowedRoles={[USER_ROLES.SUPERADMIN, USER_ROLES.ORG_OWNER, USER_ROLES.BRANCH_MANAGER, USER_ROLES.INVENTORY_MANAGER]}>
             <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.location.href = '/admin'}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
@@ -286,7 +286,7 @@ export function RoleDashboard() {
           </RoleGuard>
 
           {/* Analytics Dashboard */}
-          <RoleGuard allowedRoles={[USER_ROLES.BRANCH_MANAGER, USER_ROLES.ORG_OWNER, USER_ROLES.SUPER_ADMIN]}>
+          <RoleGuard allowedRoles={[USER_ROLES.BRANCH_MANAGER, USER_ROLES.ORG_OWNER, USER_ROLES.SUPERADMIN]}>
             <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.location.href = '/analytics'}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
@@ -350,7 +350,7 @@ export function RoleDashboard() {
           </Card>
 
           {/* Super Admin Only - Organization Management */}
-          <RoleGuard allowedRoles={[USER_ROLES.SUPER_ADMIN]}>
+          <RoleGuard allowedRoles={[USER_ROLES.SUPERADMIN]}>
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="flex items-center space-x-3">
