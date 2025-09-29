@@ -1045,7 +1045,7 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
-  // Duplicate methods removed - using the original implementations above
+
 
   // Advanced inventory management with automatic reordering
   async getItemsBelowReorderPoint(tenantId?: number): Promise<InventoryItem[]> {
