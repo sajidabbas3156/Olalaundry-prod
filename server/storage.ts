@@ -1045,32 +1045,7 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
-  async createInventoryItem(item: InsertInventoryItem): Promise<InventoryItem> {
-    const [newItem] = await db.insert(inventoryItems).values(item).returning();
-    return newItem;
-  }
-
-  // Simple supplier methods
-  async getSuppliers(): Promise<Supplier[]> {
-    const result = await db.select().from(suppliers);
-    return result;
-  }
-
-  async createSupplier(supplier: InsertSupplier): Promise<Supplier> {
-    const [newSupplier] = await db.insert(suppliers).values(supplier).returning();
-    return newSupplier;
-  }
-
-  // Purchase order methods
-  async getPurchaseOrders(): Promise<PurchaseOrder[]> {
-    const result = await db.select().from(purchaseOrders);
-    return result;
-  }
-
-  async createPurchaseOrder(order: InsertPurchaseOrder): Promise<PurchaseOrder> {
-    const [newOrder] = await db.insert(purchaseOrders).values(order).returning();
-    return newOrder;
-  }
+  // Duplicate methods removed - using the original implementations above
 
   // Advanced inventory management with automatic reordering
   async getItemsBelowReorderPoint(tenantId?: number): Promise<InventoryItem[]> {
@@ -1254,7 +1229,7 @@ export class DatabaseStorage implements IStorage {
       .where(and(...conditions))
       .orderBy(users.firstName);
 
-    return results.map(r => ({
+    return results.map((r: any) => ({
       ...r.employee,
       user: r.user,
       organization: r.organization || undefined,
@@ -1432,11 +1407,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getExpensesByCategory(categoryId: number): Promise<Expense[]> {
-    return await db
+    const results = await db
       .select()
       .from(expenses)
       .where(eq(expenses.categoryId, categoryId))
       .orderBy(desc(expenses.expenseDate));
+    return results as Expense[];
   }
 
   async getExpensesByDateRange(tenantId: number, startDate: Date, endDate: Date): Promise<Expense[]> {

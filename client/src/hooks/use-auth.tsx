@@ -1,20 +1,33 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+export type UserRole = 
+  | 'superadmin'
+  | 'org_owner'
+  | 'branch_manager'
+  | 'inventory_manager'
+  | 'laundry_staff'
+  | 'cashier'
+  | 'delivery_agent'
+  | 'customer';
+
 interface User {
   id: number;
   email: string;
   firstName?: string;
   lastName?: string;
   phone?: string;
-  role: string;
+  role: UserRole;
   isActive: boolean;
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
+  hasRole: (roles: UserRole | UserRole[]) => boolean;
+  hasPermission: (permission: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -84,8 +97,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     window.location.href = '/';
   };
 
+  const hasRole = (roles: UserRole | UserRole[]): boolean => {
+    if (!user) return false;
+    const roleArray = Array.isArray(roles) ? roles : [roles];
+    return roleArray.includes(user.role);
+  };
+
+  const hasPermission = (permission: string): boolean => {
+    if (!user) return false;
+    
+    // Define role-based permissions
+    const rolePermissions: Record<UserRole, string[]> = {
+      superadmin: ['*'], // All permissions
+      org_owner: ['manage_business', 'view_reports', 'manage_staff', 'manage_inventory', 'manage_orders'],
+      branch_manager: ['manage_staff', 'manage_inventory', 'manage_orders', 'view_reports'],
+      inventory_manager: ['manage_inventory', 'view_inventory_reports'],
+      laundry_staff: ['process_orders', 'view_orders'],
+      cashier: ['process_payments', 'view_orders'],
+      delivery_agent: ['manage_deliveries', 'view_delivery_orders'],
+      customer: ['place_orders', 'view_own_orders']
+    };
+
+    const userPermissions = rolePermissions[user.role] || [];
+    return userPermissions.includes('*') || userPermissions.includes(permission);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      loading, 
+      isLoading: loading, 
+      login, 
+      logout, 
+      hasRole, 
+      hasPermission 
+    }}>
       {children}
     </AuthContext.Provider>
   );
