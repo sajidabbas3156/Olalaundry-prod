@@ -73,4 +73,4 @@ export function registerRoutes(app: Express): void {
     }
   });
 }
-// Duplicate function removed - using the main registerRoutes function above
+
